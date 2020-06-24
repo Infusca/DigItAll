@@ -1,0 +1,10 @@
+saving: 05
+nic: 05
+nic: 10
+nichola: 122
+save: 127
+nich: 25
+nic: 25
+nic: 25
+nicky: 65
+nic: 74
