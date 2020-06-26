@@ -1,4 +1,4 @@
-# dig it all version 2.0
+# dig it all version 2.6
 
 # ************************************ TO DO **********************************************
 # 1) enemy and player collision - add noise and inability to detect
@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 
 # hide for mac, unhide for windows
 import winsound
-player_beep = mixer.Sound('C:/Users/nahol/Dropbox/Code/beep.wav')
+player_beep = mixer.Sound('C:/Users/nahol/Dropbox/pythonProjects/digitall/beep.wav')
 # high_tone = mixer.Sound('C:/Users/nahol/Dropbox/Code/high_tone_beep.wav')
 # low_tone = mixer.Sound ('C:/Users/nahol/Dropbox/Code/low_tone_beep.wav')
 
@@ -28,7 +28,7 @@ WIDTH = 900
 HEIGHT = 800
 item_image_size = (200, 200)
 num_items = 50
-
+path = 'C:/Users/nahol/Dropbox/pythonProjects/digitall/'
 
 # set frame
 frame = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -36,42 +36,42 @@ pygame.display.set_caption('Dig It All!')
 clock = pygame.time.Clock()
 
 # register shapes
-background_image = pygame.image.load('grass-bg.gif')
+background_image = pygame.image.load(path+'grass-bg.gif')
 
 # character images
-playerImg = pygame.image.load('player_right.gif')
-player_left = pygame.image.load('player_left.gif')
-player_down = pygame.image.load('player_up.gif')
-player_up = pygame.image.load('player_down.gif')
+playerImg = pygame.image.load(path+'player_right.gif')
+player_left = pygame.image.load(path+'player_left.gif')
+player_down = pygame.image.load(path+'player_up.gif')
+player_up = pygame.image.load(path+'player_down.gif')
 
-enemy_down = pygame.image.load('enemy_down.gif')
-enemy_up = pygame.image.load('enemy_up.gif')
-enemy_left = pygame.image.load('enemy_left.gif')
-enemy_right = pygame.image.load('enemy_right.gif')
+enemy_down = pygame.image.load(path+'enemy_down.gif')
+enemy_up = pygame.image.load(path+'enemy_up.gif')
+enemy_left = pygame.image.load(path+'enemy_left.gif')
+enemy_right = pygame.image.load(path+'enemy_right.gif')
 
-plug = pygame.image.load('plug.gif')
+plug = pygame.image.load(path+'plug.gif')
 
 # item images
-barber = pygame.image.load('barber-quarter.gif')
-buckle = pygame.image.load('colonial-shoe-buckle.gif')
-crotal_bell = pygame.image.load('crotal-bell.gif')
-dandy = pygame.image.load('dandy-button.gif')
-gw = pygame.image.load('gw-button.gif')
-harmonica_reed = pygame.image.load('harmonica-reed.gif')
-jaw_harp = pygame.image.load('jaw-harp.gif')
-skellie = pygame.image.load('key.gif')
-musket_ball = pygame.image.load('musket-ball.gif')
-ox_knob = pygame.image.load('ox-knob.gif')
-pull_tab = pygame.image.load('pull-tab.gif')
-nail = pygame.image.load('rusty-nail.gif')
-thimble = pygame.image.load('thimble.gif')
-tombac = pygame.image.load('tombac-button.gif')
-two_tine_fork = pygame.image.load('two-tine-fork.gif')
-walking_half = pygame.image.load('walking-half.gif')
-real = pygame.image.load('2-real.gif')
-pine_tree = pygame.image.load('pine-tree-shilling.gif')
-ox_shoe = pygame.image.load('ox-shoe.gif')
-fugio = pygame.image.load('fugio.gif')
+barber = pygame.image.load(path+'barber-quarter.gif')
+buckle = pygame.image.load(path+'colonial-shoe-buckle.gif')
+crotal_bell = pygame.image.load(path+'crotal-bell.gif')
+dandy = pygame.image.load(path+'dandy-button.gif')
+gw = pygame.image.load(path+'gw-button.gif')
+harmonica_reed = pygame.image.load(path+'harmonica-reed.gif')
+jaw_harp = pygame.image.load(path+'jaw-harp.gif')
+skellie = pygame.image.load(path+'key.gif')
+musket_ball = pygame.image.load(path+'musket-ball.gif')
+ox_knob = pygame.image.load(path+'ox-knob.gif')
+pull_tab = pygame.image.load(path+'pull-tab.gif')
+nail = pygame.image.load(path+'rusty-nail.gif')
+thimble = pygame.image.load(path+'thimble.gif')
+tombac = pygame.image.load(path+'tombac-button.gif')
+two_tine_fork = pygame.image.load(path+'two-tine-fork.gif')
+walking_half = pygame.image.load(path+'walking-half.gif')
+real = pygame.image.load(path+'2-real.gif')
+pine_tree = pygame.image.load(path+'pine-tree-shilling.gif')
+ox_shoe = pygame.image.load(path+'ox-shoe.gif')
+fugio = pygame.image.load(path+'fugio.gif')
 
 
 rareItems = ['GW button', 'pine tree shilling', 'fugio', '2-real']
@@ -410,7 +410,7 @@ def treasuresPouch():
 
 
 def readHighScores():
-    with open('highscores.txt', 'r') as f:
+    with open(path+'highscores.txt', 'r') as f:
         for line in f:
             highScores.append(line)
 
@@ -431,7 +431,7 @@ def saveHighScore(name):
         highScores.pop(0)
         highScores.append(newScore)
     highScores.sort(key = lambda x: x.split(' ')[1])
-    with open('highscores.txt', 'w') as f:
+    with open(path+'highscores.txt', 'w') as f:
         for score in highScores:
             score = str(score)
             f.write(score)
@@ -520,6 +520,11 @@ def showScore():
 # draw plug after digging
 def drawPlug(pos, plug):
     frame.blit(plug, pos)
+
+def ratioFound(num_items, item_locs_found):
+    r = str(len(item_locs_found))+ '/' + str(num_items)
+    ratio = sm_menu_font.render(str(r) + ' items found', True, darkgreen)
+    frame.blit(ratio, (350, 20))
 
 
 class Player():
@@ -737,7 +742,7 @@ def gameLoop():
         frame.fill(white)
         draw()
         showScore()
-
+        ratioFound(num_items, item_locs_found)
 
         if aMenu != True:
         # if menuOpen != True and treasuresOpen != True and highScoresOpen != True and controlsOpen != True:
